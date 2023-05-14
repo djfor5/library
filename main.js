@@ -2,21 +2,24 @@
 const authorInput = document.querySelector('#author')
 const titleInput = document.querySelector('#title')
 const pagesInput = document.querySelector('#pages')
-// const readInput = document.querySelector('input[name="read"]:checked')
+const readYesInput = document.querySelector('#read-yes')
+const readNoInput = document.querySelector('#read-no')
 const saveBtn = document.querySelector('#save-book')
 
 // CARDS
 const library = document.querySelector('#library')
 
 saveBtn.addEventListener('click',(event)=>{
+  event.preventDefault()
   const readInput = document.querySelector('input[name="read"]:checked')
-  console.log(readInput.value)
-  // event.preventDefault()
   addBookToLibrary(authorInput.value, titleInput.value, pagesInput.value, readInput.value)
-  // authorInput.value = ""
-  // titleInput.value = ""
-  // pagesInput.value = ""
-  // readInput.value = 0
+  
+  // RESET FORM VALUES
+  authorInput.value = ""
+  titleInput.value = ""
+  pagesInput.value = ""
+  readYesInput.checked = false
+  readNoInput.checked = false
 })
 
 let myLibrary = [];
