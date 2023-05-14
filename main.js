@@ -46,7 +46,8 @@ function addBookToLibrary(title, author, pages, read) {
   myLibrary.push(newBook)
 
   // CREATE NEW CARD
-  const card = document.createElement('p')
+  const cardDiv = document.createElement('div')
+  cardDiv.classList.add('card')
 
   // ADD P TAGS
   const pTitle = document.createElement('p')
@@ -55,17 +56,17 @@ function addBookToLibrary(title, author, pages, read) {
   const pRead = document.createElement('p')
   
   // ADD TEXT
-  pTitle.textContent = title
-  pAuthor.textContent = author
-  pPages.textContent = pages
-  pRead.textContent = read
+  pTitle.textContent = `Title: ${title}`
+  pAuthor.textContent = `Author: ${author}`
+  pPages.textContent = `Pages: ${pages}`
+  pRead.textContent = `Read: ${read}`
   
   // APPEND P TAGS TO CARD
-  card.appendChild(pTitle)
-  card.appendChild(pAuthor)
-  card.appendChild(pPages)
-  card.appendChild(pRead)
+  cardDiv.appendChild(pTitle)
+  cardDiv.appendChild(pAuthor)
+  cardDiv.appendChild(pPages)
+  cardDiv.appendChild(pRead)
   
   // APPEND CARD TO BODY
-  cardsSection.appendChild(card)
+  cardsSection.appendChild(cardDiv)
 }
