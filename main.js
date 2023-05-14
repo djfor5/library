@@ -1,4 +1,9 @@
+// NEW BOOK
+const newBtn = document.querySelector('#new-book')
+
+
 // FORM
+const form = document.querySelector('#form')
 const titleInput = document.querySelector('#title')
 const authorInput = document.querySelector('#author')
 const pagesInput = document.querySelector('#pages')
@@ -11,7 +16,12 @@ const saveBtn = document.querySelector('#save-book')
 const cardsSection = document.querySelector('#cards')
 
 
-saveBtn.addEventListener('click',(event)=>{
+newBtn.addEventListener('click', () => {
+  form.removeAttribute('hidden')
+})
+
+
+saveBtn.addEventListener('click', (event) => {
   event.preventDefault()
   const readInput = document.querySelector('input[name="read"]:checked')
   addBookToLibrary(titleInput.value, authorInput.value, pagesInput.value, readInput.value)
@@ -22,6 +32,8 @@ saveBtn.addEventListener('click',(event)=>{
   pagesInput.value = ""
   readYesInput.checked = false
   readNoInput.checked = false
+
+  form.setAttribute('hidden', 'true')
 })
 
 

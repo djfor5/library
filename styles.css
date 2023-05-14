@@ -23,3 +23,20 @@ li {
 
   padding: 1rem 1rem;
 }
+
+.button {
+  color: black;
+  border: 1px solid black;
+  border-radius: 3px;
+
+  padding: 0.5rem;
+}
+
+#new-book {
+  text-decoration: none;
+  background-color: lightblue;
+}
+
+#save-book {
+  background-color: lightgreen;
+}
