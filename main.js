@@ -36,7 +36,7 @@ saveBtn.addEventListener('click', (event) => {
   const pages = pagesInput.value
   const readInput = document.querySelector('input[name="read"]:checked')
   
-  if (!title || !author || !read) {
+  if (!title || !author || !readInput) {
     return console.warn('Missing inputs')
   }
   const read = readInput.value
