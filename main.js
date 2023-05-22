@@ -10,6 +10,7 @@ const pagesInput = document.querySelector('#pages')
 const readYesInput = document.querySelector('#read-yes')
 const readNoInput = document.querySelector('#read-no')
 const saveBtn = document.querySelector('#save-book')
+const updateBtn = document.querySelector('#update-book')
 
 
 // CARDS
@@ -18,11 +19,14 @@ let cardsSection = document.querySelector('#cards')
 
 let myLibrary = [];
 let bookId = 0
-
+let idUpdateBook
 
 newBtn.addEventListener('click', () => {
   console.log('New book button clicked')
+
   form.removeAttribute('hidden')
+  saveBtn.removeAttribute('hidden', 'true')
+  updateBtn.setAttribute('hidden', 'true')
 })
 
 
@@ -49,6 +53,32 @@ saveBtn.addEventListener('click', (event) => {
   resetFormValues()
 
   form.setAttribute('hidden', 'true')
+  saveBtn.setAttribute('hidden', 'true')
+  updateBtn.setAttribute('hidden', 'true')
+})
+
+
+updateBtn.addEventListener('click', () => {
+  myLibrary.find(bookObj => bookObj.bookId === idUpdateBook).title = titleInput.value
+  myLibrary.find(bookObj => bookObj.bookId === idUpdateBook).author = authorInput.value
+  myLibrary.find(bookObj => bookObj.bookId === idUpdateBook).pages = pagesInput.value
+  const readInput = document.querySelector('input[name="read"]:checked')
+  
+  if (!titleInput.value || !authorInput.value || !readInput) {
+    return console.warn('Missing inputs')
+  }
+  myLibrary.find(bookObj => bookObj.bookId === idUpdateBook).read = readInput.value
+
+  renderBooks(myLibrary)
+  
+  resetFormValues()
+  
+  console.log('Existing book updated in myLibrary array')
+  console.log(myLibrary)
+
+  form.setAttribute('hidden', 'true')
+  saveBtn.setAttribute('hidden', 'true')
+  updateBtn.setAttribute('hidden', 'true')
 })
 
 
@@ -86,6 +116,7 @@ function renderBooks(booksArr) {
     const pAuthor = document.createElement('p')
     const pPages = document.createElement('p')
     const pRead = document.createElement('p')
+    const btnEdit = document.createElement('button')
     const btnDelete = document.createElement('button')
 
     
@@ -95,6 +126,9 @@ function renderBooks(booksArr) {
     pAuthor.textContent = `Author: ${bookObj.author}`
     pPages.textContent = `Pages: ${bookObj.pages}`
     pRead.textContent = `Read: ${bookObj.read}`
+    btnEdit.classList.add('edit')
+    btnEdit.dataset.bookId = bookObj.bookId
+    btnEdit.textContent = 'Edit book'
     btnDelete.classList.add('delete')
     btnDelete.dataset.bookId = bookObj.bookId
     btnDelete.textContent = 'Delete book'
@@ -104,9 +138,12 @@ function renderBooks(booksArr) {
     divCard.appendChild(pAuthor)
     divCard.appendChild(pPages)
     divCard.appendChild(pRead)
+    divCard.appendChild(btnEdit)
     divCard.appendChild(btnDelete)
     cardsSection.appendChild(divCard)
   })
+
+  addEditBtns()
   addDeleteBtns()
 }
 
@@ -130,6 +167,38 @@ function addDeleteBtns() {
       myLibrary = myLibrary.filter(bookObj => bookObj.bookId !== thisDeleteBtnId)
 
       renderBooks(myLibrary)
+
+      console.log('Book deleted from myLibrary array')
+      console.log(myLibrary)
+    })     
+  })
+}
+
+
+function addEditBtns() {
+  const editBtns = document.querySelectorAll('.edit')
+  editBtns.forEach((editBtn)=>{
+    editBtn.addEventListener('click', (event)=>{
+      console.log('Edit button clicked')
+
+      const thisEditBtnId = Number(event.target.dataset.bookId)
+      console.log(thisEditBtnId)
+
+      idUpdateBook = thisEditBtnId
+      console.log(myLibrary)
+      titleInput.value = myLibrary.find(bookObj => bookObj.bookId === idUpdateBook).title
+      authorInput.value = myLibrary.find(bookObj => bookObj.bookId === idUpdateBook).author
+      pagesInput.value = myLibrary.find(bookObj => bookObj.bookId === idUpdateBook).pages
+      const isRead = myLibrary.find(bookObj => bookObj.bookId === idUpdateBook).read
+      if (isRead === 'yes') {
+        readYesInput.checked = true
+      } else if (isRead === 'no') {
+        readNoInput.checked = true
+      }
+
+      form.removeAttribute('hidden')
+      saveBtn.setAttribute('hidden', 'true')
+      updateBtn.removeAttribute('hidden')
     })     
   })
 }
