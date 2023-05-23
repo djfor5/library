@@ -116,6 +116,7 @@ function renderBooks(booksArr) {
     const pAuthor = document.createElement('p')
     const pPages = document.createElement('p')
     const pRead = document.createElement('p')
+    const btnToggleRead = document.createElement('button')
     const btnEdit = document.createElement('button')
     const btnDelete = document.createElement('button')
 
@@ -126,6 +127,9 @@ function renderBooks(booksArr) {
     pAuthor.textContent = `Author: ${bookObj.author}`
     pPages.textContent = `Pages: ${bookObj.pages}`
     pRead.textContent = `Read: ${bookObj.read}`
+    btnToggleRead.classList.add('toggle-read')
+    btnToggleRead.dataset.bookId = bookObj.bookId
+    btnToggleRead.textContent = 'Toggle read'
     btnEdit.classList.add('edit')
     btnEdit.dataset.bookId = bookObj.bookId
     btnEdit.textContent = 'Edit book'
@@ -138,11 +142,13 @@ function renderBooks(booksArr) {
     divCard.appendChild(pAuthor)
     divCard.appendChild(pPages)
     divCard.appendChild(pRead)
+    divCard.appendChild(btnToggleRead)
     divCard.appendChild(btnEdit)
     divCard.appendChild(btnDelete)
     cardsSection.appendChild(divCard)
   })
 
+  addToggleReadBtns()
   addEditBtns()
   addDeleteBtns()
 }
@@ -199,6 +205,31 @@ function addEditBtns() {
       form.removeAttribute('hidden')
       saveBtn.setAttribute('hidden', 'true')
       updateBtn.removeAttribute('hidden')
+    })     
+  })
+}
+
+
+function addToggleReadBtns() {
+  const toggleReadBtns = document.querySelectorAll('.toggle-read')
+  toggleReadBtns.forEach((toggleReadBtn)=>{
+    toggleReadBtn.addEventListener('click', (event)=>{
+      console.log('Toggle read button clicked')
+
+      const thisToggleReadBtnId = Number(event.target.dataset.bookId)
+      console.log(thisToggleReadBtnId)
+
+      idUpdateBook = thisToggleReadBtnId
+      console.log(myLibrary)
+
+      const isRead = myLibrary.find(bookObj => bookObj.bookId === idUpdateBook).read
+      if (isRead === 'yes') {
+        myLibrary.find(bookObj => bookObj.bookId === idUpdateBook).read = 'no'
+      } else if (isRead === 'no') {
+        myLibrary.find(bookObj => bookObj.bookId === idUpdateBook).read = 'yes'
+      }
+      
+      renderBooks(myLibrary)
     })     
   })
 }
