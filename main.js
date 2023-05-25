@@ -122,38 +122,59 @@ function renderBooks(booksArr) {
   booksArr.forEach((bookObj)=>{
     // create card and info elements
     const divCard = document.createElement('div')
-    const pTitle = document.createElement('p')
-    const pAuthor = document.createElement('p')
-    const pPages = document.createElement('p')
-    const pRead = document.createElement('p')
+    const divInfo = document.createElement('div')
+    const spanTitleHeading = document.createElement('span')
+    const spanTitle = document.createElement('span')
+    const spanAuthorHeading = document.createElement('span')
+    const spanAuthor = document.createElement('span')
+    const spanPagesHeading = document.createElement('span')
+    const spanPages = document.createElement('span')
+    const spanRead = document.createElement('span')
+    const spanReadHeading = document.createElement('span')
     const btnToggleRead = document.createElement('button')
     const btnEdit = document.createElement('button')
     const btnDelete = document.createElement('button')
+    const divButtons = document.createElement('div')
 
     // add attributes and text content to elements
     divCard.classList.add('card')
-    pTitle.textContent = `Title: ${bookObj.title}`
-    pAuthor.textContent = `Author: ${bookObj.author}`
-    pPages.textContent = `Pages: ${bookObj.pages}`
-    pRead.textContent = `Read: ${bookObj.read}`
+    spanTitleHeading.textContent = `Title: `
+    spanTitle.textContent = `${bookObj.title}`
+    spanAuthorHeading.textContent = `Author: `
+    spanAuthor.textContent = `${bookObj.author}`
+    spanPagesHeading.textContent = `Pages: `
+    spanPages.textContent = `${bookObj.pages}`
+    spanReadHeading.textContent = `Read: `
+    spanRead.textContent = `${bookObj.read}`
+    spanRead.classList.add('capitalise-first')
     btnToggleRead.classList.add('toggle-read')
+    btnToggleRead.classList.add('button')
     btnToggleRead.dataset.bookId = bookObj.bookId
-    btnToggleRead.textContent = 'Toggle read'
+    btnToggleRead.textContent = 'Toggle Read'
     btnEdit.classList.add('edit')
+    btnEdit.classList.add('button')
     btnEdit.dataset.bookId = bookObj.bookId
-    btnEdit.textContent = 'Edit book'
+    btnEdit.textContent = 'Edit Book'
     btnDelete.classList.add('delete')
+    btnDelete.classList.add('button')
     btnDelete.dataset.bookId = bookObj.bookId
-    btnDelete.textContent = 'Delete book'
+    btnDelete.textContent = 'Delete Book'
+    divButtons.classList.add('card-buttons')
 
     // append elements to divCard and divCard to cardsSection
-    divCard.appendChild(pTitle)
-    divCard.appendChild(pAuthor)
-    divCard.appendChild(pPages)
-    divCard.appendChild(pRead)
-    divCard.appendChild(btnToggleRead)
-    divCard.appendChild(btnEdit)
-    divCard.appendChild(btnDelete)
+    divInfo.appendChild(spanTitleHeading)
+    divInfo.appendChild(spanTitle)
+    divInfo.appendChild(spanAuthorHeading)
+    divInfo.appendChild(spanAuthor)
+    divInfo.appendChild(spanPagesHeading)
+    divInfo.appendChild(spanPages)
+    divInfo.appendChild(spanReadHeading)
+    divInfo.appendChild(spanRead)
+    divButtons.appendChild(btnToggleRead)
+    divButtons.appendChild(btnEdit)
+    divButtons.appendChild(btnDelete)
+    divCard.appendChild(divInfo)
+    divCard.appendChild(divButtons)
     cardsSection.appendChild(divCard)
   })
 
