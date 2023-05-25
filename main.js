@@ -94,6 +94,14 @@ function Book(title, author, pages, read) {
   this.read = read
 }
 
+Book.prototype.toggleRead = function() {
+  if (this.read === 'yes') {
+    return this.read = 'no'
+  } else if (this.read === 'no') {
+    return this.read = 'yes'
+  }
+}
+
 
 function addBookToLibrary(title, author, pages, read) {
   const newBook = new Book(title, author, pages, read)
@@ -167,7 +175,7 @@ function addDeleteBtns() {
   const deleteBtns = document.querySelectorAll('.delete')
   deleteBtns.forEach((deleteBtn)=>{
     deleteBtn.addEventListener('click', (event)=>{
-      console.log('Delete button clicked')
+      console.log('Delete book button clicked')
       const thisDeleteBtnId = Number(event.target.dataset.bookId)
 
       myLibrary = myLibrary.filter(bookObj => bookObj.bookId !== thisDeleteBtnId)
@@ -214,20 +222,13 @@ function addToggleReadBtns() {
   const toggleReadBtns = document.querySelectorAll('.toggle-read')
   toggleReadBtns.forEach((toggleReadBtn)=>{
     toggleReadBtn.addEventListener('click', (event)=>{
-      console.log('Toggle read button clicked')
+      console.log('Toggle read button clicked, toggleRead() method invoked for selected book.')
 
       const thisToggleReadBtnId = Number(event.target.dataset.bookId)
-      console.log(thisToggleReadBtnId)
-
       idUpdateBook = thisToggleReadBtnId
+      
+      myLibrary.find(bookObj => bookObj.bookId === idUpdateBook).toggleRead()
       console.log(myLibrary)
-
-      const isRead = myLibrary.find(bookObj => bookObj.bookId === idUpdateBook).read
-      if (isRead === 'yes') {
-        myLibrary.find(bookObj => bookObj.bookId === idUpdateBook).read = 'no'
-      } else if (isRead === 'no') {
-        myLibrary.find(bookObj => bookObj.bookId === idUpdateBook).read = 'yes'
-      }
       
       renderBooks(myLibrary)
     })     
