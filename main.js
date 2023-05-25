@@ -19,10 +19,11 @@ let cardsSection = document.querySelector('#cards')
 
 let myLibrary = [];
 let bookId = 0
-let idUpdateBook
+let thisIdUpdateBook
+
 
 newBtn.addEventListener('click', () => {
-  console.log('New book button clicked')
+  console.log('%cNew book', 'font-weight: bold; font-style: italic;', 'button clicked.')
 
   form.removeAttribute('hidden')
   saveBtn.removeAttribute('hidden', 'true')
@@ -32,7 +33,7 @@ newBtn.addEventListener('click', () => {
 
 saveBtn.addEventListener('click', (event) => {
   event.preventDefault()
-  console.log('Save book button clicked')
+  console.log('%cSave book', 'font-weight: bold; font-style: italic;', 'button clicked, new book added to myLibrary array.')
   
   // get values from input fields
   const title = titleInput.value
@@ -44,7 +45,6 @@ saveBtn.addEventListener('click', (event) => {
     return console.warn('Missing inputs')
   }
   const read = readInput.value
-
 
   // create new book object and add to myLibrary array
   addBookToLibrary(title, author, pages, read)
@@ -59,21 +59,23 @@ saveBtn.addEventListener('click', (event) => {
 
 
 updateBtn.addEventListener('click', () => {
-  myLibrary.find(bookObj => bookObj.bookId === idUpdateBook).title = titleInput.value
-  myLibrary.find(bookObj => bookObj.bookId === idUpdateBook).author = authorInput.value
-  myLibrary.find(bookObj => bookObj.bookId === idUpdateBook).pages = pagesInput.value
+  console.log(thisIdUpdateBook)
+
+  myLibrary.find(bookObj => bookObj.bookId === thisIdUpdateBook).title = titleInput.value
+  myLibrary.find(bookObj => bookObj.bookId === thisIdUpdateBook).author = authorInput.value
+  myLibrary.find(bookObj => bookObj.bookId === thisIdUpdateBook).pages = pagesInput.value
   const readInput = document.querySelector('input[name="read"]:checked')
   
   if (!titleInput.value || !authorInput.value || !readInput) {
     return console.warn('Missing inputs')
   }
-  myLibrary.find(bookObj => bookObj.bookId === idUpdateBook).read = readInput.value
+  myLibrary.find(bookObj => bookObj.bookId === thisIdUpdateBook).read = readInput.value
 
   renderBooks(myLibrary)
   
   resetFormValues()
   
-  console.log('Existing book updated in myLibrary array')
+  console.log('%cUpdate book', 'font-weight: bold; font-style: italic;', 'button clicked, selected book updated in myLibrary array.')
   console.log(myLibrary)
 
   form.setAttribute('hidden', 'true')
@@ -94,6 +96,7 @@ function Book(title, author, pages, read) {
   this.read = read
 }
 
+
 Book.prototype.toggleRead = function() {
   if (this.read === 'yes') {
     return this.read = 'no'
@@ -109,7 +112,6 @@ function addBookToLibrary(title, author, pages, read) {
   bookId++
   myLibrary.push(newBook)
 
-  console.log('New book added to myLibrary array')
   console.log(myLibrary)
 }
 
@@ -128,7 +130,6 @@ function renderBooks(booksArr) {
     const btnEdit = document.createElement('button')
     const btnDelete = document.createElement('button')
 
-    
     // add attributes and text content to elements
     divCard.classList.add('card')
     pTitle.textContent = `Title: ${bookObj.title}`
@@ -175,15 +176,13 @@ function addDeleteBtns() {
   const deleteBtns = document.querySelectorAll('.delete')
   deleteBtns.forEach((deleteBtn)=>{
     deleteBtn.addEventListener('click', (event)=>{
-      console.log('Delete book button clicked')
+      console.log('%cDelete book', 'font-weight: bold; font-style: italic;', 'button clicked, selected book deleted from myLibrary array.')
       const thisDeleteBtnId = Number(event.target.dataset.bookId)
 
       myLibrary = myLibrary.filter(bookObj => bookObj.bookId !== thisDeleteBtnId)
+      console.log(myLibrary)
 
       renderBooks(myLibrary)
-
-      console.log('Book deleted from myLibrary array')
-      console.log(myLibrary)
     })     
   })
 }
@@ -193,22 +192,21 @@ function addEditBtns() {
   const editBtns = document.querySelectorAll('.edit')
   editBtns.forEach((editBtn)=>{
     editBtn.addEventListener('click', (event)=>{
-      console.log('Edit button clicked')
+      console.log('%cEdit book', 'font-weight: bold; font-style: italic;', 'button clicked.')
 
-      const thisEditBtnId = Number(event.target.dataset.bookId)
-      console.log(thisEditBtnId)
-
-      idUpdateBook = thisEditBtnId
-      console.log(myLibrary)
-      titleInput.value = myLibrary.find(bookObj => bookObj.bookId === idUpdateBook).title
-      authorInput.value = myLibrary.find(bookObj => bookObj.bookId === idUpdateBook).author
-      pagesInput.value = myLibrary.find(bookObj => bookObj.bookId === idUpdateBook).pages
-      const isRead = myLibrary.find(bookObj => bookObj.bookId === idUpdateBook).read
+      thisIdUpdateBook = Number(event.target.dataset.bookId)
+      
+      titleInput.value = myLibrary.find(bookObj => bookObj.bookId === thisIdUpdateBook).title
+      authorInput.value = myLibrary.find(bookObj => bookObj.bookId === thisIdUpdateBook).author
+      pagesInput.value = myLibrary.find(bookObj => bookObj.bookId === thisIdUpdateBook).pages
+      const isRead = myLibrary.find(bookObj => bookObj.bookId === thisIdUpdateBook).read
       if (isRead === 'yes') {
         readYesInput.checked = true
       } else if (isRead === 'no') {
         readNoInput.checked = true
       }
+
+      console.log(myLibrary)
 
       form.removeAttribute('hidden')
       saveBtn.setAttribute('hidden', 'true')
@@ -222,12 +220,11 @@ function addToggleReadBtns() {
   const toggleReadBtns = document.querySelectorAll('.toggle-read')
   toggleReadBtns.forEach((toggleReadBtn)=>{
     toggleReadBtn.addEventListener('click', (event)=>{
-      console.log('Toggle read button clicked, toggleRead() method invoked for selected book.')
+      console.log('%cToggle read', 'font-weight: bold; font-style: italic;', 'button clicked, read status toggled on selected book and updated in myLibrary array.')
 
-      const thisToggleReadBtnId = Number(event.target.dataset.bookId)
-      idUpdateBook = thisToggleReadBtnId
+      const thisIdToggleReadBook = Number(event.target.dataset.bookId)
       
-      myLibrary.find(bookObj => bookObj.bookId === idUpdateBook).toggleRead()
+      myLibrary.find(bookObj => bookObj.bookId === thisIdToggleReadBook).toggleRead()
       console.log(myLibrary)
       
       renderBooks(myLibrary)
