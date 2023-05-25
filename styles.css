@@ -64,6 +64,11 @@ li {
   font-weight: bold;
 }
 
+.card span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .button {
   color: black;
   font-weight: bold;
