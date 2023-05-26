@@ -37,13 +37,10 @@ li {
 }
 
 #cards {
-  max-width: min(1200px, 80%);
-  margin-inline: auto;
-  
-  display: grid;
+  margin-top: 1rem;
 
+  display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  /* grid-auto-rows: 200px; */
   gap: 1rem;
 }
 
@@ -138,6 +135,7 @@ li {
 
 #cancel {
   margin-top: 1rem;
+  margin-bottom: 1rem;
   background-color: #ff8170;
   border: 2px solid #8d463d;
 }
