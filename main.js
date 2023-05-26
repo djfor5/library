@@ -26,6 +26,8 @@ let thisIdUpdateBook
 newBtn.addEventListener('click', () => {
   console.log('%cNew book', 'font-weight: bold; font-style: italic;', 'button clicked.')
 
+  resetFormValues()
+
   form.removeAttribute('hidden')
   saveBtn.removeAttribute('hidden', 'true')
   updateBtn.setAttribute('hidden', 'true')
@@ -212,6 +214,12 @@ function addDeleteBtns() {
 
       myLibrary = myLibrary.filter(bookObj => bookObj.bookId !== thisDeleteBtnId)
       console.log(myLibrary)
+
+      resetFormValues()
+
+      form.setAttribute('hidden', 'true')
+      saveBtn.setAttribute('hidden', 'true')
+      updateBtn.setAttribute('hidden', 'true')
 
       renderBooks(myLibrary)
     })     
