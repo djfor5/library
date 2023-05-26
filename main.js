@@ -11,6 +11,7 @@ const readYesInput = document.querySelector('#read-yes')
 const readNoInput = document.querySelector('#read-no')
 const saveBtn = document.querySelector('#save-book')
 const updateBtn = document.querySelector('#update-book')
+const cancelBtn = document.querySelector('#cancel')
 
 
 // CARDS
@@ -59,8 +60,6 @@ saveBtn.addEventListener('click', (event) => {
 
 
 updateBtn.addEventListener('click', () => {
-  console.log(thisIdUpdateBook)
-
   myLibrary.find(bookObj => bookObj.bookId === thisIdUpdateBook).title = titleInput.value
   myLibrary.find(bookObj => bookObj.bookId === thisIdUpdateBook).author = authorInput.value
   myLibrary.find(bookObj => bookObj.bookId === thisIdUpdateBook).pages = pagesInput.value
@@ -77,6 +76,17 @@ updateBtn.addEventListener('click', () => {
   
   console.log('%cUpdate book', 'font-weight: bold; font-style: italic;', 'button clicked, selected book updated in myLibrary array.')
   console.log(myLibrary)
+
+  form.setAttribute('hidden', 'true')
+  saveBtn.setAttribute('hidden', 'true')
+  updateBtn.setAttribute('hidden', 'true')
+})
+
+
+cancelBtn.addEventListener('click', () => {
+  console.log('%cCancel', 'font-weight: bold; font-style: italic;', 'button clicked.')
+  
+  resetFormValues()
 
   form.setAttribute('hidden', 'true')
   saveBtn.setAttribute('hidden', 'true')

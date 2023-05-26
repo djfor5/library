@@ -136,6 +136,20 @@ li {
   background-color: #936aaf;
 }
 
+#cancel {
+  margin-top: 1rem;
+  background-color: #ff8170;
+  border: 2px solid #8d463d;
+}
+
+#cancel:hover {
+  background-color: #e27162;
+}
+
+#cancel:active {
+  background-color: #c26154;
+}
+
 .card-buttons {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
