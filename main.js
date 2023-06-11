@@ -96,24 +96,20 @@ cancelBtn.addEventListener('click', () => {
 })
 
 
-function Book(title, author, pages, read) {
-  if (!(this instanceof Book)) {
-    // console.warn('The "new" keyword must be used to call Book')
-    return new Book(title, author, pages, read)
+class Book {
+  constructor(title, author, pages, read) {
+    this.title = title
+    this.author = author
+    this.pages = pages
+    this.read = read
   }
 
-  this.title = title
-  this.author = author
-  this.pages = pages
-  this.read = read
-}
-
-
-Book.prototype.toggleRead = function() {
-  if (this.read === 'yes') {
-    return this.read = 'no'
-  } else if (this.read === 'no') {
-    return this.read = 'yes'
+  toggleRead() {
+    if (this.read === 'yes') {
+      return this.read = 'no'
+    } else if (this.read === 'no') {
+      return this.read = 'yes'
+    }
   }
 }
 
