@@ -33,6 +33,26 @@ newBtn.addEventListener('click', () => {
   updateBtn.setAttribute('hidden', 'true')
 })
 
+function checkInput(inputElement) {
+  if (inputElement.validity.tooShort) {
+    inputElement.setCustomValidity('Minimum 2 characters required.')
+    inputElement.reportValidity()
+    console.log(inputElement.checkValidity())
+    console.log(inputElement.validity)
+  } else {
+    inputElement.setCustomValidity('')
+    inputElement.reportValidity()
+    console.log(inputElement.checkValidity())
+    console.log(inputElement.validity)
+  }
+}
+  
+titleInput.addEventListener('input', ()=>{
+  checkInput(titleInput)
+});
+authorInput.addEventListener('input', ()=>{
+  checkInput(authorInput)
+});
 
 saveBtn.addEventListener('click', (event) => {
   event.preventDefault()
@@ -44,7 +64,7 @@ saveBtn.addEventListener('click', (event) => {
   const pages = pagesInput.value
   const readInput = document.querySelector('input[name="read"]:checked')
   
-  if (!title || !author || !readInput) {
+  if (!titleInput.validity.valid || !authorInput.validity.valid || !readInput.validity.valid) {
     return console.warn('Missing inputs')
   }
   const read = readInput.value
@@ -59,7 +79,6 @@ saveBtn.addEventListener('click', (event) => {
   saveBtn.setAttribute('hidden', 'true')
   updateBtn.setAttribute('hidden', 'true')
 })
-
 
 updateBtn.addEventListener('click', () => {
   myLibrary.find(bookObj => bookObj.bookId === thisIdUpdateBook).title = titleInput.value
