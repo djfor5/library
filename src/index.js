@@ -1,3 +1,5 @@
+import "./style.css";
+
 // NEW BOOK
 const newBtn = document.querySelector("#new-book");
 
